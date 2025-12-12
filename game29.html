@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>รายละเอียดเกม: Eldoria Chronicles</title>
+    <!-- โหลด Tailwind CSS CDN เพื่อการออกแบบที่รวดเร็วและสวยงาม -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- กำหนดค่าเริ่มต้นของ Tailwind และใช้ฟอนต์ Inter -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#4F46E5', // Indigo-600
+                        'secondary': '#F97316', // Orange-600
+                        'background': '#1F2937', // Gray-800
+                        'card': '#374151', // Gray-700
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'Tahoma', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        /* ตั้งค่าพื้นหลังและสีข้อความพื้นฐาน */
+        body {
+            background-color: #1F2937;
+            color: #F3F4F6;
+        }
+        /* สไตล์สำหรับปุ่มหลัก */
+        .btn-primary {
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(79, 70, 229, 0.5), 0 4px 6px -4px rgba(79, 70, 229, 0.5);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ส่วนหัว (Header) และแถบนำทาง (Navigation) -->
+    <header class="sticky top-0 z-50 bg-background/90 backdrop-blur-sm shadow-lg">
+        <nav class="container mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+            <div class="text-2xl font-bold text-primary">
+                AESTHETIC<span class="text-secondary">.GAMES</span>
+            </div>
+            <!-- Links and Auth Button -->
+            <div class="hidden md:flex space-x-8 text-lg font-medium items-center">
+                <a href="index.html" class="hover:text-primary transition duration-150">หน้าแรก</a>
+                <a href="collection.html" class="hover:text-primary transition duration-150">เกมทั้งหมด</a>
+                <a href="index.html#categories" class="hover:text-primary transition duration-150">หมวดหมู่</a>
+                <a href="#" class="hover:text-primary transition duration-150">บทความ</a>
+                
+                <!-- Authentication Status/Button Container -->
+                <div id="auth-status-container">
+                    <button id="auth-button" class="px-4 py-2 bg-secondary rounded-full text-white font-semibold hover:bg-orange-700 transition duration-300">เข้าสู่ระบบ / สมัคร</button>
+                </div>
+            </div>
+            <!-- ปุ่มเมนูสำหรับมือถือ -->
+            <button id="menu-button" class="md:hidden focus:outline-none p-2 rounded-lg hover:bg-card">
+                <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+            </button>
+        </nav>
+        <!-- เมนูมือถือ (ซ่อนไว้ก่อน) -->
+        <div id="mobile-menu" class="hidden md:hidden bg-card/95 py-2">
+            <a href="index.html" class="block px-4 py-2 text-sm hover:bg-gray-600 transition duration-150">หน้าแรก</a>
+            <a href="collection.html" class="block px-4 py-2 text-sm hover:bg-gray-600 transition duration-150">เกมทั้งหมด</a>
+            <a href="index.html#categories" class="block px-4 py-2 text-sm hover:bg-gray-600 transition duration-150">หมวดหมู่</a>
+            <a href="#" class="block px-4 py-2 text-sm hover:bg-gray-600 transition duration-150">บทความ</a>
+             <div id="auth-mobile-status" class="px-4 py-2">
+                 <button id="auth-button-mobile" class="w-full px-4 py-2 bg-secondary rounded-full text-white font-semibold hover:bg-orange-700 transition duration-300">เข้าสู่ระบบ / สมัคร</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
+        
+        <!-- ข้อมูลเกมหลัก (Hero Section) -->
+        <section class="bg-card p-6 md:p-10 rounded-xl shadow-2xl mb-12">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- คอลัมน์ซ้าย: ภาพและปุ่ม -->
+                <div class="lg:col-span-2 space-y-6">
+                    <!-- ภาพตัวอย่าง (ใช้ Placeholder Image) -->
+                    <img src="https://placehold.co/1200x600/4F46E5/ffffff?text=Eldoria+Chronicles+%5Bตัวอย่างเกม%5D" 
+                         alt="ภาพหน้าจอ Eldoria Chronicles" 
+                         class="w-full rounded-xl shadow-lg border-4 border-primary/50">
+                    
+                    <!-- ปุ่มหลัก -->
+                    <button class="w-full md:w-auto px-10 py-4 bg-secondary text-white text-xl font-bold rounded-xl btn-primary hover:bg-orange-600 transition duration-300 flex items-center justify-center space-x-2">
+                        <!-- Play Icon -->
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M6 18V6l12 6z"/></svg>
+                        <span>เล่นเกมนี้เลย! (Play Now)</span>
+                    </button>
+                    
+                    <p class="text-sm text-gray-400 text-center md:text-left">
+                        *เกมนี้เล่นฟรีบนเว็บเบราว์เซอร์
+                    </p>
+                </div>
+
+                <!-- คอลัมน์ขวา: รายละเอียดและสถิติ -->
+                <div class="lg:col-span-1 space-y-6">
+                    <h1 class="text-4xl font-extrabold text-white">Eldoria Chronicles</h1>
+                    <p class="text-lg text-primary font-semibold">Open-World RPG | สไตล์: สีน้ำ / Cel-Shade</p>
+
+                    <p class="text-gray-300 leading-relaxed">
+                        เกม RPG แนว Open-world ที่เน้นการเล่าเรื่องและการสำรวจโลกสีน้ำที่สวยงามตระการตา ผู้เล่นจะได้รับบทเป็นนักเดินทางผู้กล้าหาญที่ต้องเปิดเผยความลับของอาณาจักรเอลโดเรียที่สาบสูญ การต่อสู้แบบเทิร์นเบสที่ผสมผสานเข้ากับศิลปะภาพอันอ่อนโยน
+                    </p>
+
+                    <!-- Rating & Stats Block -->
+                    <div class="bg-gray-800 p-5 rounded-lg shadow-inner border border-gray-700">
+                        <div class="flex items-center space-x-2 mb-3">
+                            <span class="text-5xl font-extrabold text-yellow-400">4.8</span>
+                            <div class="flex flex-col">
+                                <span class="text-xl font-bold text-white">ยอดเยี่ยม</span>
+                                <span class="text-sm text-gray-400">คะแนนเฉลี่ยจาก 1,200 รีวิว</span>
+                            </div>
+                        </div>
+                        <hr class="border-gray-700 my-4">
+                        <div class="space-y-2 text-sm">
+                            <p><strong>ผู้พัฒนา:</strong> Aesthetic Studio</p>
+                            <p><strong>วันที่เผยแพร่:</strong> 15 มกราคม 2025</p>
+                            <p><strong>แพลตฟอร์ม:</strong> Web Browser, Mobile (Mock-up)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ส่วนรีวิวและความคิดเห็น -->
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold text-white mb-6 border-b border-gray-700 pb-2">ความคิดเห็นจากผู้เล่น</h2>
+            
+            <div id="reviews-container" class="space-y-6">
+                <!-- Review Mock-up 1 -->
+                <div class="bg-card p-6 rounded-lg shadow-lg border border-gray-700">
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="font-bold text-lg text-primary">นักสำรวจแห่งเงา</span>
+                        <span class="text-yellow-400 font-bold">5.0 ⭐</span>
+                    </div>
+                    <p class="text-gray-300">"ภาพวาดสีน้ำสวยงามมาก เนื้อเรื่องลึกซึ้ง และเพลงประกอบก็เยี่ยมที่สุด ทำให้รู้สึกเหมือนได้หลุดเข้าไปอยู่ในโลกแห่งเทพนิยายจริงๆ"</p>
+                </div>
+                
+                <!-- Review Mock-up 2 -->
+                <div class="bg-card p-6 rounded-lg shadow-lg border border-gray-700">
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="font-bold text-lg text-secondary">ผู้เล่นมือใหม่</span>
+                        <span class="text-yellow-400 font-bold">4.5 ⭐</span>
+                    </div>
+                    <p class="text-gray-300">"เป็นเกม RPG ที่ยอดเยี่ยม แต่ระบบต่อสู้อาจจะช้าไปนิดสำหรับผู้เล่นบางคน แต่โดยรวมแล้วคุ้มค่าที่จะเล่นมาก"</p>
+                </div>
+                
+                <!-- Review Input Placeholder -->
+                <div class="bg-gray-800 p-6 rounded-lg border border-gray-700">
+                    <h3 class="text-xl font-bold text-white mb-4">เขียนรีวิวของคุณ</h3>
+                    <textarea id="review-text" rows="4" class="w-full p-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-500 focus:ring-primary focus:border-primary" placeholder="แบ่งปันความคิดเห็นของคุณเกี่ยวกับเกมนี้..."></textarea>
+                    <div class="flex justify-between items-center mt-3">
+                        <select class="p-2 bg-gray-700 border border-gray-600 rounded-lg text-white">
+                            <option>5 ดาว</option>
+                            <option>4 ดาว</option>
+                            <option>3 ดาว</option>
+                            <option>2 ดาว</option>
+                            <option>1 ดาว</option>
+                        </select>
+                        <button class="px-6 py-2 bg-primary text-white font-semibold rounded-lg hover:bg-indigo-700 transition duration-300">ส่งรีวิว</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ส่วนท้าย (Footer) -->
+    <footer class="bg-card border-t border-gray-700 mt-12">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8 text-center text-gray-400">
+            <div class="flex flex-col md:flex-row justify-center space-y-2 md:space-y-0 md:space-x-8 mb-4">
+                <a href="#" class="hover:text-primary transition duration-150">นโยบายความเป็นส่วนตัว</a>
+                <a href="#" class="hover:text-primary transition duration-150">ข้อกำหนดการใช้งาน</a>
+            </div>
+            <p>&copy; 2025 โลกแห่งเกมอันงดงาม (AESTHETIC.GAMES) | สงวนลิขสิทธิ์</p>
+        </div>
+    </footer>
+
+    <!-- Auth Modal Container (หน้าต่างสำหรับ Login/Signup) - (Same as other pages) -->
+    <div id="auth-modal" class="fixed inset-0 bg-black bg-opacity-80 z-[100] hidden flex items-center justify-center p-4">
+        <!-- Modal Content -->
+        <div class="bg-card w-full max-w-md p-6 rounded-xl shadow-2xl relative border border-primary/50">
+            <button id="close-modal-button" class="absolute top-4 right-4 text-gray-400 hover:text-white transition duration-150">
+                <!-- Close icon -->
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+            
+            <h2 id="auth-title" class="text-3xl font-bold text-primary mb-6 text-center">เข้าสู่ระบบ</h2>
+            <!-- Error Message Box -->
+            <p id="auth-error-message" class="text-sm bg-red-900/50 text-red-300 border border-red-700 p-3 rounded-lg mb-4 hidden"></p>
+
+            <!-- Form -->
+            <form id="auth-form">
+                <!-- Email Input -->
+                <div class="mb-4">
+                    <label for="auth-email" class="block text-sm font-medium text-gray-300 mb-2">อีเมล</label>
+                    <input type="email" id="auth-email" required class="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg focus:ring-primary focus:border-primary text-white" placeholder="you@example.com">
+                </div>
+                <!-- Password Input -->
+                <div class="mb-6">
+                    <label for="auth-password" class="block text-sm font-medium text-gray-300 mb-2">รหัสผ่าน</label>
+                    <input type="password" id="auth-password" required class="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg focus:ring-primary focus:border-primary text-white" placeholder="********">
+                </div>
+                
+                <!-- Submit Button (Text changes based on mode) -->
+                <button type="submit" id="submit-auth-button" class="w-full btn-primary bg-primary hover:bg-indigo-700 text-white font-bold py-3 rounded-lg">เข้าสู่ระบบ</button>
+            </form>
+
+            <!-- Toggle Mode -->
+            <div class="mt-6 text-center">
+                <p id="toggle-auth-text" class="text-gray-400 text-sm">ยังไม่มีบัญชี? 
+                    <button type="button" id="toggle-auth-mode" class="text-secondary hover:text-orange-400 font-medium">สมัครสมาชิก</button>
+                </p>
+            </div>
+            
+            <div class="mt-4 text-xs text-center text-gray-500">
+                <p>รหัสผู้ใช้ (User ID): <span id="current-user-id" class="font-mono text-primary text-xs break-all">-- N/A --</span></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDK Imports และ Game Logic Script -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { setLogLevel } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+
+        // กำหนดให้ Firebase แสดง log ในโหมด Debug
+        setLogLevel('Debug');
+
+        // Global variables provided by the environment
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+        const firebaseConfig = JSON.parse(typeof __firebase_config !== 'undefined' ? __firebase_config : '{}');
+        const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
+
+        let app, db, auth;
+        let isSignUpMode = false; // สถานะปัจจุบันของ Modal: false=Login, true=Signup
+
+        // --- DOM Elements ---
+        const authModal = document.getElementById('auth-modal');
+        const closeModalButton = document.getElementById('close-modal-button');
+        const authTitle = document.getElementById('auth-title');
+        const authForm = document.getElementById('auth-form');
+        const submitAuthButton = document.getElementById('submit-auth-button');
+        const authErrorMessage = document.getElementById('auth-error-message');
+        const currentUserIdElement = document.getElementById('current-user-id');
+        const authStatusContainer = document.getElementById('auth-status-container');
+        const authMobileStatus = document.getElementById('auth-mobile-status');
+
+
+        // --- Firebase Initialization and Authentication ---
+
+        const initializeFirebase = async () => {
+            try {
+                app = initializeApp(firebaseConfig);
+                db = getFirestore(app);
+                auth = getAuth(app);
+                
+                if (initialAuthToken) {
+                    await signInWithCustomToken(auth, initialAuthToken);
+                } else {
+                    await signInAnonymously(auth);
+                }
+
+                onAuthStateChanged(auth, handleAuthStateChanged);
+
+            } catch (error) {
+                console.error("Firebase Initialization or Sign-In Error:", error);
+                displayError(`เกิดข้อผิดพลาดในการเชื่อมต่อ: ${error.message}`);
+            }
+        };
+
+        const handleAuthStateChanged = (user) => {
+            if (user) {
+                const userId = user.uid;
+                currentUserIdElement.textContent = userId;
+                updateHeaderForSignedInUser(user);
+
+                if (user.email) {
+                    createOrUpdateUserProfile(userId, user.email);
+                }
+            } else {
+                currentUserIdElement.textContent = '-- N/A --';
+                updateHeaderForSignedOutUser();
+            }
+        };
+        
+        const createOrUpdateUserProfile = async (userId, email) => {
+             // Mock-up Firestore interaction (Private data)
+            const userDocRef = doc(db, `artifacts/${appId}/users/${userId}/profile`, 'details');
+            try {
+                // In a real app, you would check if the document exists first
+                // For this example, we just set or update a last login time
+                await setDoc(userDocRef, { 
+                    email: email, 
+                    lastLogin: new Date().toISOString()
+                }, { merge: true });
+                // console.log("User profile updated successfully.");
+            } catch (error) {
+                console.error("Error creating/updating user profile:", error);
+            }
+        };
+
+        const updateHeaderForSignedInUser = (user) => {
+            const displayName = user.email ? user.email.split('@')[0] : 'ผู้ใช้';
+            
+            // Desktop/Tablet
+            authStatusContainer.innerHTML = `
+                <div class="flex items-center space-x-4">
+                    <span class="text-sm font-medium text-primary">สวัสดี, ${displayName}</span>
+                    <button id="sign-out-button" class="px-4 py-2 bg-gray-600 rounded-full text-white font-semibold hover:bg-gray-700 transition duration-300">ออกจากระบบ</button>
+                </div>
+            `;
+            // Mobile
+            authMobileStatus.innerHTML = `
+                <div class="text-sm font-medium text-primary mb-2 text-center">สวัสดี, ${displayName}</div>
+                <button id="sign-out-button-mobile" class="w-full px-4 py-2 bg-gray-600 rounded-full text-white font-semibold hover:bg-gray-700 transition duration-300">ออกจากระบบ</button>
+            `;
+            
+            document.getElementById('sign-out-button')?.addEventListener('click', handleSignOut);
+            document.getElementById('sign-out-button-mobile')?.addEventListener('click', handleSignOut);
+            document.getElementById('auth-button')?.removeEventListener('click', () => openAuthModal('login'));
+            document.getElementById('auth-button-mobile')?.removeEventListener('click', () => openAuthModal('login'));
+        };
+
+        const updateHeaderForSignedOutUser = () => {
+            // Desktop/Tablet
+            authStatusContainer.innerHTML = `
+                <button id="auth-button" class="px-4 py-2 bg-secondary rounded-full text-white font-semibold hover:bg-orange-700 transition duration-300">เข้าสู่ระบบ / สมัคร</button>
+            `;
+             // Mobile
+            authMobileStatus.innerHTML = `
+                <button id="auth-button-mobile" class="w-full px-4 py-2 bg-secondary rounded-full text-white font-semibold hover:bg-orange-700 transition duration-300">เข้าสู่ระบบ / สมัคร</button>
+            `;
+            
+            document.getElementById('auth-button')?.addEventListener('click', () => openAuthModal('login'));
+            document.getElementById('auth-button-mobile')?.addEventListener('click', () => openAuthModal('login'));
+        };
+        
+        const handleSignOut = async () => {
+            try {
+                await signOut(auth);
+            } catch (error) {
+                console.error("Sign Out Error:", error);
+            }
+        };
+
+        const toggleAuthMode = () => {
+            isSignUpMode = !isSignUpMode;
+            if (isSignUpMode) {
+                authTitle.textContent = 'สมัครสมาชิก';
+                submitAuthButton.textContent = 'สมัครสมาชิก';
+                document.getElementById('toggle-auth-text').innerHTML = 'มีบัญชีอยู่แล้ว? <button type="button" id="toggle-auth-mode" class="text-secondary hover:text-orange-400 font-medium">เข้าสู่ระบบ</button>';
+            } else {
+                authTitle.textContent = 'เข้าสู่ระบบ';
+                submitAuthButton.textContent = 'เข้าสู่ระบบ';
+                document.getElementById('toggle-auth-text').innerHTML = 'ยังไม่มีบัญชี? <button type="button" id="toggle-auth-mode" class="text-secondary hover:text-orange-400 font-medium">สมัครสมาชิก</button>';
+            }
+            document.getElementById('toggle-auth-mode').addEventListener('click', toggleAuthMode);
+            hideError();
+        };
+
+        const openAuthModal = (mode = 'login') => {
+            isSignUpMode = (mode === 'signup');
+            toggleAuthMode();
+            authModal.classList.remove('hidden');
+        };
+
+        const closeAuthModal = () => {
+            authModal.classList.add('hidden');
+            authForm.reset();
+            hideError();
+        };
+
+        const displayError = (message) => {
+            authErrorMessage.textContent = message;
+            authErrorMessage.classList.remove('hidden');
+        };
+
+        const hideError = () => {
+            authErrorMessage.classList.add('hidden');
+            authErrorMessage.textContent = '';
+        };
+        
+        const handleAuthSubmit = async (e) => {
+            e.preventDefault();
+            hideError();
+
+            const email = document.getElementById('auth-email').value;
+            const password = document.getElementById('auth-password').value;
+
+            submitAuthButton.disabled = true;
+            submitAuthButton.textContent = isSignUpMode ? 'กำลังสมัคร...' : 'กำลังเข้าสู่ระบบ...';
+
+            try {
+                if (isSignUpMode) {
+                    await createUserWithEmailAndPassword(auth, email, password);
+                } else {
+                    await signInWithEmailAndPassword(auth, email, password);
+                }
+                
+                closeAuthModal();
+
+            } catch (error) {
+                console.error("Authentication Error:", error);
+                let errorMessage;
+                switch (error.code) {
+                    case 'auth/email-already-in-use':
+                        errorMessage = 'อีเมลนี้ถูกใช้ในการสมัครแล้ว';
+                        break;
+                    case 'auth/invalid-email':
+                        errorMessage = 'รูปแบบอีเมลไม่ถูกต้อง';
+                        break;
+                    case 'auth/weak-password':
+                        errorMessage = 'รหัสผ่านต้องมีอย่างน้อย 6 ตัวอักษร';
+                        break;
+                    case 'auth/user-not-found':
+                    case 'auth/wrong-password':
+                        errorMessage = 'อีเมลหรือรหัสผ่านไม่ถูกต้อง';
+                        break;
+                    default:
+                        errorMessage = `เกิดข้อผิดพลาด: ${error.message}`;
+                }
+                displayError(errorMessage);
+            } finally {
+                submitAuthButton.disabled = false;
+                submitAuthButton.textContent = isSignUpMode ? 'สมัครสมาชิก' : 'เข้าสู่ระบบ';
+            }
+        };
+
+        // --- Main Initialization and Event Listeners ---
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            // 1. Initialize Firebase and Auth
+            initializeFirebase();
+
+            // 2. Set up event listeners for the mobile menu
+            const menuButton = document.getElementById('menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+
+            menuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+
+            // 3. Set up Auth Modal event listeners 
+            // Note: Initial listeners for auth-button are set in updateHeaderForSignedOutUser/updateHeaderForSignedInUser
+            closeModalButton.addEventListener('click', closeAuthModal);
+            document.getElementById('toggle-auth-mode').addEventListener('click', toggleAuthMode);
+            authForm.addEventListener('submit', handleAuthSubmit);
+
+            authModal.addEventListener('click', (e) => {
+                if (e.target === authModal) {
+                    closeAuthModal();
+                }
+            });
+            
+            // 4. (Future) Logic to load game data based on ID from URL parameter goes here.
+            // Currently, it displays mock data directly in the HTML structure.
+        });
+    </script>
+</body>
+</html>
