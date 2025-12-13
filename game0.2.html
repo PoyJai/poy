@@ -56,6 +56,7 @@
                 <a href="#" class="hover:text-primary transition duration-150">บทความ</a>
                 
                 <!-- Cart Button (ตำแหน่งบนขวาสำหรับ Desktop) -->
+                <!-- ถูกซ่อนด้วย JS ในตอนแรกและแสดงเมื่อ AUTH สำเร็จเท่านั้น -->
                 <button id="cart-button" class="relative p-2 rounded-full hover:bg-gray-700 transition duration-300 hidden" title="ตะกร้าสินค้า">
                     <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M7 18C7 19.1046 7.89543 20 9 20C10.1046 20 11 19.1046 11 18C11 16.8954 10.1046 16 9 16C7.89543 16 7 16.8954 7 18ZM17 18C17 19.1046 17.8954 20 19 20C20.1046 20 21 19.1046 21 18C21 16.8954 20.1046 16 19 16C17.8954 16 17 16.8954 17 18ZM10.5 14H18.847L21.432 5.597C21.574 5.162 21.285 4.67 20.843 4.542L5.843 1.542C5.401 1.414 4.909 1.703 4.779 2.138L1.652 12.396C1.41 13.15 1.96 13.916 2.768 14.161L10.5 14Z"/></svg>
                     <span id="cart-item-count" class="absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white transform translate-x-1/2 -translate-y-1/2 bg-secondary rounded-full">0</span>
@@ -63,6 +64,7 @@
                 
                 <!-- Authentication Status/Button Container -->
                 <div id="auth-status-container">
+                    <!-- แสดงปุ่ม Login ก่อน ถ้า Firebase ยังไม่พร้อม -->
                     <button id="auth-button" class="px-4 py-2 bg-secondary rounded-full text-white font-semibold hover:bg-orange-700 transition duration-300">เข้าสู่ระบบ / สมัคร</button>
                 </div>
             </div>
@@ -82,7 +84,6 @@
         <div id="mobile-menu" class="hidden md:hidden bg-card/95 py-2">
             <a href="index.html" class="block px-4 py-2 text-sm hover:bg-gray-600 transition duration-150">หน้าแรก</a>
             <a href="collection.html" class="block px-4 py-2 text-sm hover:bg-gray-600 transition duration-150">เกมทั้งหมด</a>
-            <a href="index.html#categories" class="block px-4 py-2 text-sm hover:bg-gray-600 transition duration-150">หมวดหมู่</a>
             <a href="#" class="block px-4 py-2 text-sm hover:bg-gray-600 transition duration-150">บทความ</a>
              <div id="auth-mobile-status" class="px-4 py-2">
                  <button id="auth-button-mobile" class="w-full px-4 py-2 bg-secondary rounded-full text-white font-semibold hover:bg-orange-700 transition duration-300">เข้าสู่ระบบ / สมัคร</button>
@@ -98,7 +99,7 @@
                 <!-- คอลัมน์ซ้าย: ภาพและปุ่ม -->
                 <div class="lg:col-span-2 space-y-6">
                     <!-- ภาพตัวอย่าง (ใช้ Placeholder Image) -->
-                    <img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1285010/header.jpg?t=1734603417" 
+                    <img src="https://placehold.co/1200x600/4F46E5/ffffff?text=Eldoria+Chronicles+%5Bตัวอย่างเกม%5D" 
                          alt="ภาพหน้าจอ Eldoria Chronicles" 
                          class="w-full rounded-xl shadow-lg border-4 border-primary/50">
                     
@@ -106,7 +107,7 @@
                     <button id="purchase-button" class="w-full md:w-auto px-10 py-4 bg-secondary text-white text-xl font-bold rounded-xl btn-primary hover:bg-orange-600 transition duration-300 flex items-center justify-center space-x-2">
                         <!-- Cart Icon -->
                         <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M6 2L3 6V20C3 21.1046 3.89543 22 5 22H19C20.1046 22 21 21.1046 21 20V6L18 2H6ZM6 4H18L20 7H4L6 4ZM10 10V16H14V10H10Z"/></svg>
-                        <span>เพิ่มเกมนี้เข้าตะกร้า: ฿499.00</span>
+                        <span>เพิ่มเกมนี้เข้าตะกร้า: ฿399.00</span>
                     </button>
                     
                     <p class="text-sm text-gray-400 text-center md:text-left">
@@ -116,11 +117,11 @@
 
                 <!-- คอลัมน์ขวา: รายละเอียดและสถิติ -->
                 <div class="lg:col-span-1 space-y-6">
-                    <h1 class="text-4xl font-extrabold text-white">CyberCore Protocol</h1>
-                    <p class="text-lg text-primary font-semibold">Sci-Fi MMO Shooter | สไตล์: นีออน / Realistic</p>
+                    <h1 class="text-4xl font-extrabold text-white">Eldoria Chronicles</h1>
+                    <p class="text-lg text-primary font-semibold">Open-World RPG | สไตล์: สีน้ำ / Cel-Shade</p>
 
                     <p class="text-gray-300 leading-relaxed">
-                        ผู้เล่นเข้าสู่โลกไซเบอร์พังค์แบบออนไลน์ด้วยระบบล็อกอินส่วนตัว สวมบททหารรับจ้างในเมืองยุคอนาคต ต่อสู้ PvP และ PvE ด้วยอาวุธไฮเทค ภาพนีออนสว่างตัดกับเงามืดของมหานครสร้างบรรยากาศล้ำยุคที่น่าตื่นเต้น
+                        เกม RPG แนว Open-world ที่เน้นการเล่าเรื่องและการสำรวจโลกสีน้ำที่สวยงามตระการตา ผู้เล่นจะได้รับบทเป็นนักเดินทางผู้กล้าหาญที่ต้องเปิดเผยความลับของอาณาจักรเอลโดเรียที่สาบสูญ การต่อสู้แบบเทิร์นเบสที่ผสมผสานเข้ากับศิลปะภาพอันอ่อนโยน
                     </p>
 
                     <!-- Rating & Stats Block -->
@@ -137,7 +138,7 @@
                             <p><strong>ผู้พัฒนา:</strong> Aesthetic Studio</p>
                             <p><strong>วันที่เผยแพร่:</strong> 15 มกราคม 2025</p>
                             <p><strong>แพลตฟอร์ม:</strong> Web Browser, Mobile (Mock-up)</p>
-                            <p><strong>ราคา:</strong> <span class="text-green-400 font-bold">฿499.00</span></p>
+                            <p><strong>ราคา:</strong> <span class="text-green-400 font-bold">฿399.00</span></p>
                         </div>
                     </div>
                 </div>
@@ -334,7 +335,8 @@
         let app, db, auth;
         let isSignUpMode = false; // สถานะปัจจุบันของ Modal: false=Login, true=Signup
         let cartUnsubscribe = null; // สำหรับยกเลิก listener ของตะกร้า
-
+        let isAuthReady = false; // สถานะใหม่: เพื่อติดตามว่า Auth ได้ตรวจสอบสถานะเริ่มต้นแล้ว
+        
         // --- Game & Cart Details ---
         const currentGameId = 'EldoriaChronicles_001';
         const currentGamePrice = 399.00;
@@ -407,30 +409,43 @@
 
         const initializeFirebase = async () => {
             try {
+                // Initialize only if firebaseConfig is not empty
+                if (Object.keys(firebaseConfig).length === 0) {
+                     console.error("Firebase config is missing. Running without cloud features.");
+                     handleAuthStateChanged(null); // Treat as signed out for local testing purposes
+                     return;
+                }
+                
                 app = initializeApp(firebaseConfig);
                 db = getFirestore(app);
                 auth = getAuth(app);
                 
+                // Set up the listener first
+                onAuthStateChanged(auth, handleAuthStateChanged);
+
+                // Then try to sign in
                 if (initialAuthToken) {
                     await signInWithCustomToken(auth, initialAuthToken);
                 } else {
+                    // Sign in anonymously if no custom token is provided (local run or new user)
                     await signInAnonymously(auth);
                 }
-
-                onAuthStateChanged(auth, handleAuthStateChanged);
 
             } catch (error) {
                 console.error("Firebase Initialization or Sign-In Error:", error);
                 displayError(`เกิดข้อผิดพลาดในการเชื่อมต่อ: ${error.message}`);
+                handleAuthStateChanged(null);
             }
         };
 
         const handleAuthStateChanged = (user) => {
+            isAuthReady = true; // Auth state has been checked at least once
+            
             if (user) {
                 const userId = user.uid;
                 currentUserIdElement.textContent = userId;
                 updateHeaderForSignedInUser(user);
-                listenToCartChanges(userId); // NEW: Start listening to cart
+                listenToCartChanges(userId); // Start listening to cart
                 
                 if (user.email) {
                     createOrUpdateUserProfile(userId, user.email);
@@ -450,7 +465,6 @@
              // Mock-up Firestore interaction (Private data)
             const userDocRef = doc(db, `artifacts/${appId}/users/${userId}/profile`, 'details');
             try {
-                // For this example, we just set or update a last login time
                 await setDoc(userDocRef, { 
                     email: email, 
                     lastLogin: new Date().toISOString()
@@ -479,7 +493,7 @@
             document.getElementById('sign-out-button')?.addEventListener('click', handleSignOut);
             document.getElementById('sign-out-button-mobile')?.addEventListener('click', handleSignOut);
             
-            // Show cart buttons
+            // --- CRITICAL: Show cart buttons now that the user is authenticated ---
             cartButton.classList.remove('hidden');
             cartButtonMobile.classList.remove('hidden');
         };
@@ -498,7 +512,7 @@
             document.getElementById('auth-button')?.addEventListener('click', () => openAuthModal('login'));
             document.getElementById('auth-button-mobile')?.addEventListener('click', () => openAuthModal('login'));
 
-            // Hide cart buttons
+            // --- CRITICAL: Hide cart buttons when signed out ---
             cartButton.classList.add('hidden');
             cartButtonMobile.classList.add('hidden');
         };
@@ -553,6 +567,11 @@
         const handleAuthSubmit = async (e) => {
             e.preventDefault();
             hideError();
+            
+            if (!isAuthReady) {
+                displayError('ระบบกำลังเตรียมความพร้อม กรุณาลองใหม่ในไม่ช้า');
+                return;
+            }
 
             const email = document.getElementById('auth-email').value;
             const password = document.getElementById('auth-password').value;
@@ -597,10 +616,11 @@
         };
 
 
-        // --- Cart Functions (New) ---
+        // --- Cart Functions ---
 
         const listenToCartChanges = (userId) => {
-            if (!userId || !db) return;
+            // ไม่ต้องรันถ้า Firebase ไม่ได้ถูกตั้งค่า (สำหรับกรณีรัน Local ที่ config เป็นค่าว่าง)
+            if (!userId || !db) return; 
 
             if (cartUnsubscribe) {
                 cartUnsubscribe(); // Stop existing listener if any
@@ -625,21 +645,19 @@
 
         const updateCartCounter = () => {
             const totalItems = Object.keys(cartItems).length;
+            const countText = totalItems > 0 ? totalItems : 0;
             
             // Desktop (top right)
-            const itemCountElement = document.getElementById('cart-item-count');
-            if (itemCountElement) {
-                itemCountElement.textContent = totalItems > 0 ? totalItems : 0;
-                // If the count is 0, we can hide the whole button if we want, but since we are showing
-                // it only after login, we'll ensure the count updates.
-                itemCountElement.parentElement.classList.toggle('hidden', totalItems === 0 && !auth.currentUser.isAnonymous);
-            }
+            document.getElementById('cart-item-count').textContent = countText;
+            
             // Mobile (top right)
-            const itemCountMobileElement = document.getElementById('cart-item-count-mobile');
-            if (itemCountMobileElement) {
-                itemCountMobileElement.textContent = totalItems > 0 ? totalItems : 0;
-                itemCountMobileElement.parentElement.classList.toggle('hidden', totalItems === 0 && !auth.currentUser.isAnonymous);
-            }
+            document.getElementById('cart-item-count-mobile').textContent = countText;
+            
+            // Check if cart buttons should be visible (only visible when authenticated)
+            const userIsAuthenticated = auth?.currentUser?.uid;
+            
+            cartButton.classList.toggle('hidden', !userIsAuthenticated);
+            cartButtonMobile.classList.toggle('hidden', !userIsAuthenticated);
         };
 
         const openCartModal = () => {
@@ -661,6 +679,11 @@
                 showTemporaryMessage('กรุณาเข้าสู่ระบบเพื่อเพิ่มสินค้าในตะกร้า', 'info');
                 openAuthModal('login');
                 return;
+            }
+
+            if (!db) {
+                 showTemporaryMessage('การเชื่อมต่อฐานข้อมูลไม่พร้อม', 'error');
+                 return;
             }
 
             const userId = auth.currentUser.uid;
@@ -690,6 +713,7 @@
         
         const removeFromCart = async (gameId, gameName) => {
             if (!auth.currentUser || auth.currentUser.isAnonymous) return;
+            if (!db) return;
 
             const userId = auth.currentUser.uid;
             const cartDocRef = getUserCartDocRef(userId);
@@ -846,7 +870,7 @@
         // --- Main Initialization and Event Listeners ---
         
         document.addEventListener('DOMContentLoaded', () => {
-            // 1. Initialize Firebase and Auth
+            // 1. Initialize Firebase and Auth (This is an async process)
             initializeFirebase();
 
             // 2. Set up event listeners for the mobile menu
@@ -868,9 +892,8 @@
                 }
             });
             
-            // 4. Set up Cart Listeners (New)
+            // 4. Set up Cart Listeners
             purchaseButton.addEventListener('click', addToCart);
-            // Cart button listeners for top right placement
             cartButton.addEventListener('click', openCartModal);
             cartButtonMobile.addEventListener('click', openCartModal);
             closeCartModalButton.addEventListener('click', closeCartModal);
@@ -891,6 +914,9 @@
                 }
             });
 
+            // 6. Ensure initial auth buttons are clickable immediately
+            document.getElementById('auth-button')?.addEventListener('click', () => openAuthModal('login'));
+            document.getElementById('auth-button-mobile')?.addEventListener('click', () => openAuthModal('login'));
         });
     </script>
 </body>

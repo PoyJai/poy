@@ -1,9 +1,12 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="th">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>คอลเลกชันเกมทั้งหมด</title>
+    <title>โลกแห่งเกมอันงดงาม</title>
     <!-- โหลด Tailwind CSS CDN เพื่อการออกแบบที่รวดเร็วและสวยงาม -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- กำหนดค่าเริ่มต้นของ Tailwind และใช้ฟอนต์ Inter -->
@@ -55,181 +58,129 @@
     <header class="sticky top-0 z-50 bg-background/90 backdrop-blur-sm shadow-lg">
         <nav class="container mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
             <div class="text-2xl font-bold text-primary">
-                AESTHETIC<span class="text-secondary">.GAMES</span>
+                เจ๊ปอย<span class="text-secondary">.เช่าเกม</span>
             </div>
             <!-- Links and Auth Button -->
             <div class="hidden md:flex space-x-8 text-lg font-medium items-center">
-                <a href="index.html" class="hover:text-primary transition duration-150">หน้าแรก</a>
-                <a href="#" class="text-primary transition duration-150">เกมทั้งหมด</a>
-                <a href="#" class="hover:text-primary transition duration-150">บทความ</a>
-                
+                <a href="#" class="hover:text-primary transition duration-150">หน้าแรก</a>
+                <a href="#featured" class="hover:text-primary transition duration-150">เกมทั้งหมด</a>
+                <a href="payment.html" class="hover:text-primary transition duration-150">Payment</a>              
                 <!-- Authentication Status/Button Container -->
-                <div id="auth-status-container">
-                    <button id="auth-button" class="px-4 py-2 bg-secondary rounded-full text-white font-semibold hover:bg-orange-700 transition duration-300">เข้าสู่ระบบ / สมัคร</button>
-                </div>
+            <div id="auth-status-container">
+                <?php if (isset($_SESSION['user_id'])): ?>
+                    <span class="mr-3 text-primary">
+                        สวัสดี, <?php echo $_SESSION['username']; ?>
+                    </span>
+                    <a href="logout.php">
+                        <button class="px-4 py-2 bg-gray-600 rounded-full text-white">
+                            ออกจากระบบ
+                        </button>
+                    </a>
+                <?php else: ?>
+                    <a href="login_from.php">
+                        <button class="px-4 py-2 bg-secondary rounded-full text-white">
+                            เข้าสู่ระบบ / สมัคร
+                        </button>
+                    </a>
+
+                <?php endif; ?>
+            </div>
+
             </div>
             <!-- ปุ่มเมนูสำหรับมือถือ -->
             <button id="menu-button" class="md:hidden focus:outline-none p-2 rounded-lg hover:bg-card">
                 <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
-            </button>
+            </button> 
         </nav>
         <!-- เมนูมือถือ (ซ่อนไว้ก่อน) -->
         <div id="mobile-menu" class="hidden md:hidden bg-card/95 py-2">
-            <a href="index.html" class="block px-4 py-2 text-sm hover:bg-gray-600 transition duration-150">หน้าแรก</a>
-            <a href="#" class="block px-4 py-2 text-sm text-primary hover:bg-gray-600 transition duration-150">เกมทั้งหมด</a>
-            <a href="index.html#categories" class="block px-4 py-2 text-sm hover:bg-gray-600 transition duration-150">หมวดหมู่</a>
-            <a href="#" class="block px-4 py-2 text-sm hover:bg-gray-600 transition duration-150">บทความ</a>
+            <a href="#" class="block px-4 py-2 text-sm hover:bg-gray-600 transition duration-150">หน้าแรก</a>
+            <a href="#featured" class="block px-4 py-2 text-sm hover:bg-gray-600 transition duration-150">เกมสวยงาม</a>
+            <a href="#" class="block px-4 py-2 text-sm hover:bg-gray-600 transition duration-150">Payment</a>
              <div id="auth-mobile-status" class="px-4 py-2">
+                <a href="login_from.php"></a>
                  <button id="auth-button-mobile" class="w-full px-4 py-2 bg-secondary rounded-full text-white font-semibold hover:bg-orange-700 transition duration-300">เข้าสู่ระบบ / สมัคร</button>
             </div>
         </div>
     </header>
 
-    <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
-        <h1 class="text-4xl md:text-6xl font-extrabold text-white mb-4">
-            คอลเลกชันเกม<span class="text-primary">ทั้งหมด</span>
-        </h1>
-        <p class="text-xl text-gray-400 mb-12">
-            ค้นพบเกมที่มีสไตล์ภาพเฉพาะตัวจากทุกหมวดหมู่ที่เราคัดสรรมาให้คุณ
-        </p>
+    <main>
+        <!-- ส่วน Hero Section -->
+        <section class="relative h-[60vh] md:h-[80vh] flex items-center justify-center text-center bg-cover bg-center" 
+                 style="background-image: url('https://wallpapercat.com/w/full/0/c/c/126192-3840x2160-desktop-4k-game-of-thrones-wallpaper-photo.jpg');">
+            <!-- Overlay สีดำกึ่งโปร่งใสเพื่อให้ข้อความอ่านง่าย -->
+            <div class="absolute inset-0 bg-background/70"></div>
+            <div class="relative z-10 p-6 max-w-4xl mx-auto">
+                <h1 class="text-4xl sm:text-6xl lg:text-7xl font-extrabold leading-tight mb-4 text-white">
+                    ศิล<span class="text-primary">ปะ</span>และความงดงามที่จับต้องได้
+                </h1>
+                <p class="text-lg sm:text-xl text-gray-300 mb-8">
+                    ค้นพบจักรวาลของเกมที่สร้างสรรค์ด้วยภาพที่สวยงาม และเรื่องราวที่น่าหลงใหล
+                </p>
+                <a href="#featured" class="btn-primary inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-full text-white bg-primary hover:bg-indigo-700 md:py-4 md:text-lg md:px-10">
+                    สำรวจเกม
+                    <svg class="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                </a>
+        </section>
 
-        <!-- ส่วน Filter และ Sort (Mock-up UI) -->
-        <div class="bg-card p-4 rounded-xl shadow-inner mb-10 flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0 md:space-x-4">
-            <!-- Filter by Style -->
-            <div class="w-full md:w-auto flex items-center space-x-3">
-                <label for="style-filter" class="text-gray-300 text-sm font-medium">สไตล์:</label>
-                <select id="style-filter" class="bg-gray-700 border border-gray-600 text-white text-sm rounded-lg focus:ring-primary focus:border-primary block p-2.5">
-                    <option selected>ทั้งหมด</option>
-                    <option value="watercolor">สีน้ำ / Cel-Shade</option>
-                    <option value="minimalist">Minimalist 3D</option>
-                    <option value="pixel">Pixel Art</option>
-                    <option value="sci-fi">Sci-Fi Neon</option>
-                </select>
-            </div>
-
-            <!-- Sort By -->
-            <div class="w-full md:w-auto flex items-center space-x-3">
-                <label for="sort-by" class="text-gray-300 text-sm font-medium">เรียงตาม:</label>
-                <select id="sort-by" class="bg-gray-700 border border-gray-600 text-white text-sm rounded-lg focus:ring-primary focus:border-primary block p-2.5">
-                    <option selected>ใหม่ล่าสุด</option>
-                    <option value="rating">คะแนนยอดนิยม</option>
-                    <option value="name">ชื่อ (A-Z)</option>
-                </select>
-            </div>
+        <!-- ส่วน Featured Game Collection -->
+        <section id="featured" class="py-16 md:py-24 container mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl md:text-5xl font-bold text-center mb-12 text-white">
+                คอลเลกชันเกมยอดนิยม
+            </h2>
             
-            <p class="text-sm text-gray-500 md:self-end">แสดงผล: 1 - 12 จาก 45 เกม</p>
-        </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- การ์ดเกม 1 -->
+                <div class="game-card bg-card rounded-xl overflow-hidden shadow-2xl">
+                    <img src="https://logos-world.net/wp-content/uploads/2021/03/FiveM-Symbol.png" alt="ภาพเกม Fantasy Aesthetic" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <a href="game0.1.html">
+                        <h3 class="text-xl font-bold text-white mb-2">Five M</h3>
+                        <p class="text-gray-400 text-sm mb-4">กราฟิกเซลเฉดที่ละมุนตาและโลกที่เต็มไปด้วยความลับ</p>
+                        <span class="inline-block bg-primary/20 text-primary text-xs font-semibold px-3 py-1 rounded-full">Indie</span></a>
+                    </div>
+                </div>
 
-        <!-- รายการเกมทั้งหมด -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-            <!-- Game 1 (Featured 1) -->
-            <div class="game-card bg-card rounded-xl overflow-hidden shadow-2xl">
-                <img src="https://play-lh.googleusercontent.com/4zGWjw32HaEPjme33JRibn21e3GW16b-u1celGwZ9wyQfpneOY6MM2RoLMJgmjOTYwg" alt="ภาพเกม Eldoria Chronicles" class="w-full h-48 object-cover">
-                <div class="p-6">
-                    <a href="game1.html">
-                    <h3 class="text-xl font-bold text-white mb-2">Astral Nexus Online</h3>
-                    <p class="text-gray-400 text-sm mb-4 h-12 overflow-hidden">MMORPG | สไตล์: แฟนตาซี / Cel-Shade</p>
-                    <span class="inline-block bg-primary/20 text-primary text-xs font-semibold px-3 py-1 rounded-full">Open-World RPG</span></a>
+                <!-- การ์ดเกม 2 -->
+                <div class="game-card bg-card rounded-xl overflow-hidden shadow-2xl">
+                    <img src="https://media.sketchfab.com/models/5848769ca37f442eb9d100374d02be4b/thumbnails/18ac83c88c7642acb4c76f900b9d152e/6b46efc4de46443aa067a74d63f4a4c9.jpeg" alt="ภาพเกม Sci-Fi Minimalist" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <a href="game0.2.html">
+                        <h3 class="text-xl font-bold text-white mb-2">Pub g</h3>
+                        <p class="text-gray-400 text-sm mb-4">การออกแบบยานอวกาศที่เรียบง่าย แต่มีสไตล์และอนาคต</p>
+                        <span class="inline-block bg-secondary/20 text-secondary text-xs font-semibold px-3 py-1 rounded-full">Simulation</span></a>
+                    </div>
                 </div>
-            </div>
-            
-            <!-- Game 2 (Featured 2) -->
-            <div class="game-card bg-card rounded-xl overflow-hidden shadow-2xl">
-                <img src="https://game-game.com/gamesimg/273488.jpg" alt="ภาพเกม Neo-Aetheria" class="w-full h-48 object-cover">
-                <div class="p-6">
-                    <a href="game2.html">
-                    <h3 class="text-xl font-bold text-white mb-2">CyberCore Protocol</h3>
-                    <p class="text-gray-400 text-sm mb-4 h-12 overflow-hidden">Sci-Fi MMO Shooter | สไตล์: นีออน / Realistic</p>
-                    <span class="inline-block bg-secondary/20 text-secondary text-xs font-semibold px-3 py-1 rounded-full">Cyberpunk Adventure</span></a>
-                </div>
-            </div>
 
-            <!-- Game 3 (Featured 3) -->
-            <div class="game-card bg-card rounded-xl overflow-hidden shadow-2xl">
-                <img src="https://placehold.co/400x300/10B981/ffffff?text=Quiet+Gardener" alt="ภาพเกม The Quiet Gardener" class="w-full h-48 object-cover">
-                <div class="p-6">
-                    <a href="game3.html">
-                    <h3 class="text-xl font-bold text-white mb-2">The Quiet Gardener</h3>
-                    <p class="text-gray-400 text-sm mb-4 h-12 overflow-hidden">เกมจำลองการทำสวนที่ผ่อนคลาย ด้วยภาพวาดมืออันอบอุ่น</p>
-                    <span class="inline-block bg-green-500/20 text-green-500 text-xs font-semibold px-3 py-1 rounded-full">Relaxing Sim</span></a>
+                <!-- การ์ดเกม 3 -->
+                <div class="game-card bg-card rounded-xl overflow-hidden shadow-2xl">
+                    <img src="https://image.api.playstation.com/vulcan/ap/rnd/202407/0401/670c294ded3baf4fa11068db2ec6758c63f7daeb266a35a1.png" alt="ภาพเกม Serene Nature" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <a href="game0.3.html">
+                        <h3 class="text-xl font-bold text-white mb-2">Minecraft</h3>
+                        <p class="text-gray-400 text-sm mb-4">ดื่มด่ำกับป่าไม้และทะเลสาบที่ถูกวาดอย่างประณีต</p>
+                        <span class="inline-block bg-green-500/20 text-green-500 text-xs font-semibold px-3 py-1 rounded-full">Adventure</span></a>
+                    </div>
                 </div>
-            </div>
-            
-            <!-- Game 4 (Featured 4) -->
-            <div class="game-card bg-card rounded-xl overflow-hidden shadow-2xl">
-                <img src="https://placehold.co/400x300/EC4899/ffffff?text=Pixel+Dreamland" alt="ภาพเกม Pixel Dreamland" class="w-full h-48 object-cover">
-                <div class="p-6">
-                    <a href="game4.html">
-                    <h3 class="text-xl font-bold text-white mb-2">Pixel Dreamland</h3>
-                    <p class="text-gray-400 text-sm mb-4 h-12 overflow-hidden">เกม Platformer แนว Retro ที่ใช้เทคนิคการจัดแสงและเงาสมัยใหม่</p>
-                    <span class="inline-block bg-pink-500/20 text-pink-500 text-xs font-semibold px-3 py-1 rounded-full">Retro Platformer</span></a>
-                </div>
-            </div>
 
-            <!-- Game 5: Aurora Drifter (Low-Poly) -->
-            <div class="game-card bg-card rounded-xl overflow-hidden shadow-2xl">
-                <img src="https://placehold.co/400x300/6366F1/ffffff?text=Aurora+Drifter" alt="ภาพเกม Aurora Drifter" class="w-full h-48 object-cover">
-                <div class="p-6">
-                    <a href="game5.html">
-                    <h3 class="text-xl font-bold text-white mb-2">Aurora Drifter</h3>
-                    <p class="text-gray-400 text-sm mb-4 h-12 overflow-hidden">เกมขับยานสำรวจโลก Low-Poly ที่เน้นสีสันของแสงเหนือและบรรยากาศสงบ</p>
-                    <span class="inline-block bg-indigo-500/20 text-indigo-500 text-xs font-semibold px-3 py-1 rounded-full">Low-Poly Exploration</span></a>
+                <!-- การ์ดเกม 4 -->
+                <div class="game-card bg-card rounded-xl overflow-hidden shadow-2xl">
+                    <img src="https://store-images.s-microsoft.com/image/apps.19344.14082742796871732.7467348b-0622-4793-a9c9-1d21ce257c67.0d642987-9b9f-4a80-9ed9-0f67dffa7d23" alt="ภาพเกม Retro Pixel Art" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <a href="game0.4.html">
+                        <h3 class="text-xl font-bold text-white mb-2">EA SPORTS FC™ 25 </h3>
+                        <p class="text-gray-400 text-sm mb-4">เสน่ห์ของภาพพิกเซลที่ลงตัวและมีชีวิตชีวา</p>
+                        <span class="inline-block bg-pink-500/20 text-pink-500 text-xs font-semibold px-3 py-1 rounded-full">Platformer</span></a>
+                    </div>
                 </div>
             </div>
             
-            <!-- Game 6: Inkbound Tale (Hand-Drawn) -->
-            <div class="game-card bg-card rounded-xl overflow-hidden shadow-2xl">
-                <img src="https://placehold.co/400x300/BE123C/ffffff?text=Inkbound+Tale" alt="ภาพเกม Inkbound Tale" class="w-full h-48 object-cover">
-                <div class="p-6">
-                    <a href="game6.html">
-                    <h3 class="text-xl font-bold text-white mb-2">Inkbound Tale</h3>
-                    <p class="text-gray-400 text-sm mb-4 h-12 overflow-hidden">เกม Puzzle-Platformer ที่ใช้ภาพวาดเส้นหมึกขาวดำ</p>
-                    <span class="inline-block bg-red-700/20 text-red-700 text-xs font-semibold px-3 py-1 rounded-full">Hand-Drawn Puzzle</span></a>
-                </div>
+            <div class="text-center mt-12">
+                 <a href="allgame.html" class="inline-flex items-center justify-center px-6 py-3 border border-secondary text-base font-medium rounded-full text-secondary hover:bg-secondary hover:text-white transition duration-300">
+                    ดูเกมทั้งหมด
+                 </a>
             </div>
-
-            <!-- Game 7: Garden of Mists (Simulation) -->
-            <div class="game-card bg-card rounded-xl overflow-hidden shadow-2xl">
-                <img src="https://placehold.co/400x300/34D399/ffffff?text=Garden+of+Mists" alt="ภาพเกม Garden of Mists" class="w-full h-48 object-cover">
-                <div class="p-6">
-                    <a href="game1/game7.html"></a>
-                    <h3 class="text-xl font-bold text-white mb-2">Garden of Mists</h3>
-                    <p class="text-gray-400 text-sm mb-4 h-12 overflow-hidden">เกมจำลองชีวิตที่เน้นแสงและหมอกในสวนสไตล์ญี่ปุ่น</p>
-                    <span class="inline-block bg-emerald-500/20 text-emerald-500 text-xs font-semibold px-3 py-1 rounded-full">Atmospheric Sim</span>
-                </div>
-            </div>
-
-            <!-- Game 8: Chronos Shift (Vaporwave) -->
-            <div class="game-card bg-card rounded-xl overflow-hidden shadow-2xl">
-                <img src="https://placehold.co/400x300/A855F7/ffffff?text=Chronos+Shift" alt="ภาพเกม Chronos Shift" class="w-full h-48 object-cover">
-                <div class="p-6">
-                    <a href="game8.html">
-                    <h3 class="text-xl font-bold text-white mb-2">Chronos Shift</h3>
-                    <p class="text-gray-400 text-sm mb-4 h-12 overflow-hidden">เกมแข่งรถแนว Vaporwave/Synthwave เน้นสีชมพูม่วงและ grid</p>
-                    <span class="inline-block bg-purple-500/20 text-purple-500 text-xs font-semibold px-3 py-1 rounded-full">Vaporwave Racer</span></a>
-                </div>
-            </div>
-            
-        </div>
-        
-        <!-- Pagination Mock-up -->
-        <div class="flex justify-center mt-12 space-x-2">
-            <button class="px-4 py-2 bg-gray-700 rounded-lg text-white hover:bg-gray-600">
-                <a href="allgame.html">ก่อนหน้า</a>
-            </button>
-            <button class="px-4 py-2 bg-gray-700 rounded-lg text-white hover:bg-gray-600">
-                <a href="allgame1.html">1</a>
-            </button>
-            <button class="px-4 py-2 bg-gray-700 rounded-lg text-white hover:bg-gray-600">
-                <a href="allgame2.html">2</a>
-            </button>
-            <button class="px-4 py-2 bg-gray-700 rounded-lg text-white hover:bg-gray-600">
-                <a href="allgame3.html">3</a>
-            </button>
-            <button class="px-4 py-2 bg-gray-700 rounded-lg text-white hover:bg-gray-600">
-                <a href="allgame1.html">ถัดไป</a>
-            </button>
-        </div>
+        </section>
     </main>
 
     <!-- ส่วนท้าย (Footer) -->
@@ -243,48 +194,7 @@
         </div>
     </footer>
 
-    <!-- Auth Modal Container (หน้าต่างสำหรับ Login/Signup) - (Same as index.html) -->
-    <div id="auth-modal" class="fixed inset-0 bg-black bg-opacity-80 z-[100] hidden flex items-center justify-center p-4">
-        <!-- Modal Content -->
-        <div class="bg-card w-full max-w-md p-6 rounded-xl shadow-2xl relative border border-primary/50">
-            <button id="close-modal-button" class="absolute top-4 right-4 text-gray-400 hover:text-white transition duration-150">
-                <!-- Close icon -->
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-            </button>
-            
-            <h2 id="auth-title" class="text-3xl font-bold text-primary mb-6 text-center">เข้าสู่ระบบ</h2>
-            <!-- Error Message Box -->
-            <p id="auth-error-message" class="text-sm bg-red-900/50 text-red-300 border border-red-700 p-3 rounded-lg mb-4 hidden"></p>
-
-            <!-- Form -->
-            <form id="auth-form">
-                <!-- Email Input -->
-                <div class="mb-4">
-                    <label for="auth-email" class="block text-sm font-medium text-gray-300 mb-2">อีเมล</label>
-                    <input type="email" id="auth-email" required class="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg focus:ring-primary focus:border-primary text-white" placeholder="you@example.com">
-                </div>
-                <!-- Password Input -->
-                <div class="mb-6">
-                    <label for="auth-password" class="block text-sm font-medium text-gray-300 mb-2">รหัสผ่าน</label>
-                    <input type="password" id="auth-password" required class="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg focus:ring-primary focus:border-primary text-white" placeholder="********">
-                </div>
-                
-                <!-- Submit Button (Text changes based on mode) -->
-                <button type="submit" id="submit-auth-button" class="w-full btn-primary bg-primary hover:bg-indigo-700 text-white font-bold py-3 rounded-lg">เข้าสู่ระบบ</button>
-            </form>
-
-            <!-- Toggle Mode -->
-            <div class="mt-6 text-center">
-                <p id="toggle-auth-text" class="text-gray-400 text-sm">ยังไม่มีบัญชี? 
-                    <button type="button" id="toggle-auth-mode" class="text-secondary hover:text-orange-400 font-medium">สมัครสมาชิก</button>
-                </p>
-            </div>
-            
-            <div class="mt-4 text-xs text-center text-gray-500">
-                <p>รหัสผู้ใช้ (User ID): <span id="current-user-id" class="font-mono text-primary text-xs break-all">-- N/A --</span></p>
-            </div>
-        </div>
-    </div>
+    <!-- 
 
     <!-- Firebase SDK Imports (MUST be defined before the script below) -->
     <script type="module">
@@ -314,9 +224,12 @@
         const authTitle = document.getElementById('auth-title');
         const authForm = document.getElementById('auth-form');
         const submitAuthButton = document.getElementById('submit-auth-button');
+        const toggleAuthModeButton = document.getElementById('toggle-auth-mode');
         const toggleAuthText = document.getElementById('toggle-auth-text');
         const authErrorMessage = document.getElementById('auth-error-message');
         const currentUserIdElement = document.getElementById('current-user-id');
+        const testerRequestCheckboxContainer = document.getElementById('tester-request-checkbox-container'); // NEW
+        const requestTesterAccessCheckbox = document.getElementById('request-tester-access'); // NEW
         
         // --- Firebase Initialization and Authentication ---
 
@@ -350,10 +263,11 @@
                 updateHeaderForSignedInUser(user);
                 console.log("User signed in with ID:", userId);
 
-                // Check if user is newly registered (only for email/password)
+                // Check if user is an email user to manage profile/last login time
                 if (user.email) {
-                    // This is a registered user, potentially check/create profile document
-                    createOrUpdateUserProfile(userId, user.email);
+                    // Update last login time or create profile if it's the first time
+                    // We pass an empty object here as initialData, so it only creates/updates the last login time.
+                    createOrUpdateUserProfile(userId, user.email, {}); 
                 }
                 
             } else {
@@ -371,29 +285,37 @@
             return doc(db, 'artifacts', appId, 'users', userId, 'profiles', 'main_profile');
         };
 
-        const createOrUpdateUserProfile = async (userId, email) => {
+        /**
+         * สร้างหรืออัปเดตโปรไฟล์ผู้ใช้ใน Firestore
+         * @param {string} userId - UID ของผู้ใช้
+         * @param {string} email - อีเมลของผู้ใช้
+         * @param {Object} initialData - ข้อมูลเพิ่มเติมที่จะใส่เมื่อสร้างโปรไฟล์ใหม่ (เช่น requestTesterAccess)
+         */
+        const createOrUpdateUserProfile = async (userId, email, initialData = {}) => {
             const profileRef = getUserProfileDocRef(userId);
             try {
                 const docSnap = await getDoc(profileRef);
                 const now = new Date().toISOString();
 
                 if (!docSnap.exists()) {
-                    // Create new profile document
+                    // สร้างเอกสารโปรไฟล์ใหม่
                     await setDoc(profileRef, {
                         email: email,
                         createdAt: now,
                         lastLoginAt: now,
-                        displayName: email.split('@')[0] // Use email prefix as default display name
+                        displayName: email.split('@')[0], // ใช้ prefix ของอีเมลเป็นชื่อเริ่มต้น
+                        ...initialData // ใส่ข้อมูลเพิ่มเติมที่ส่งมา เช่น คำขอตัวเทส
                     });
                     console.log("User profile created successfully.");
                 } else {
-                    // Update last login time
+                    // อัปเดตเวลาเข้าสู่ระบบล่าสุดเท่านั้น
                     await setDoc(profileRef, { lastLoginAt: now }, { merge: true });
                 }
             } catch (error) {
                 console.error("Error managing user profile in Firestore:", error);
             }
         };
+
 
         // --- Auth UI/Modal Functions ---
 
@@ -403,10 +325,12 @@
                 authTitle.textContent = 'สมัครสมาชิก';
                 submitAuthButton.textContent = 'สมัครสมาชิก';
                 toggleAuthText.innerHTML = 'มีบัญชีอยู่แล้ว? <button type="button" id="toggle-auth-mode" class="text-secondary hover:text-orange-400 font-medium">เข้าสู่ระบบ</button>';
+                testerRequestCheckboxContainer.classList.remove('hidden'); // NEW: Show checkbox
             } else {
                 authTitle.textContent = 'เข้าสู่ระบบ';
                 submitAuthButton.textContent = 'เข้าสู่ระบบ';
                 toggleAuthText.innerHTML = 'ยังไม่มีบัญชี? <button type="button" id="toggle-auth-mode" class="text-secondary hover:text-orange-400 font-medium">สมัครสมาชิก</button>';
+                testerRequestCheckboxContainer.classList.add('hidden'); // NEW: Hide checkbox
             }
             // Re-attach event listener for the new button instance
             document.getElementById('toggle-auth-mode').addEventListener('click', toggleAuthMode);
@@ -415,7 +339,7 @@
 
         const openAuthModal = (mode = 'login') => {
             isSignUpMode = (mode === 'signup');
-            toggleAuthMode(); // Set initial texts
+            toggleAuthMode(); // Set initial texts and visibility
             authModal.classList.remove('hidden');
         };
 
@@ -485,12 +409,38 @@
 
             try {
                 if (isSignUpMode) {
-                    // Sign Up
-                    await createUserWithEmailAndPassword(auth, email, password);
-                    // onAuthStateChanged will handle profile creation and UI update
+                    // --- Custom Tester Check for Test Environment (NEW) ---
+                    let requestTester = requestTesterAccessCheckbox.checked;
+                    
+                    const testEmail = 'test@gmail.com';
+                    const testPassword = 'pass123456789';
+
+                    // หากข้อมูลตรงกับบัญชีทดสอบที่กำหนด ให้ถือว่าเป็น Tester ทันที
+                    if (email === testEmail && password === testPassword) {
+                        requestTester = true;
+                        console.log(`Test user ${testEmail} is registering and automatically granted tester access.`);
+                    }
+                    // --- End Custom Tester Check ---
+
+                    // 1. Sign Up
+                    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                    const user = userCredential.user;
+
+                    // 2. Prepare initial data (using potentially forced tester status)
+                    let initialData = {};
+                    if (requestTester) {
+                        const now = new Date().toISOString();
+                        initialData.requestedTesterAccess = true;
+                        initialData.testerRequestDate = now;
+                    }
+                    
+                    // 3. Create User Profile (including tester request data)
+                    await createOrUpdateUserProfile(user.uid, email, initialData); 
+                    
                 } else {
                     // Log In
                     await signInWithEmailAndPassword(auth, email, password);
+                    // Profile/lastLoginAt update handled by onAuthStateChanged
                 }
                 
                 // If successful, close modal
@@ -512,6 +462,10 @@
                     case 'auth/user-not-found':
                     case 'auth/wrong-password':
                         errorMessage = 'อีเมลหรือรหัสผ่านไม่ถูกต้อง';
+                        break;
+                    case 'auth/operation-not-allowed':
+                        // ข้อผิดพลาดนี้เกิดจากการที่ไม่ได้เปิดใช้งาน Email/Password ใน Firebase Console
+                        errorMessage = 'ไม่สามารถดำเนินการได้: ต้องเปิดใช้งานการลงชื่อเข้าใช้ด้วยอีเมล/รหัสผ่านใน Firebase Console ก่อน';
                         break;
                     default:
                         errorMessage = `เกิดข้อผิดพลาด: ${error.message}`;
@@ -547,9 +501,8 @@
             });
 
             // 3. Set up Auth Modal event listeners
-            // Event listeners are re-attached dynamically via updateHeaderForSignedOutUser
-            document.getElementById('auth-button')?.addEventListener('click', () => openAuthModal('login'));
-            document.getElementById('auth-button-mobile')?.addEventListener('click', () => openAuthModal('login'));
+            document.getElementById('auth-button').addEventListener('click', () => openAuthModal('login'));
+            document.getElementById('auth-button-mobile').addEventListener('click', () => openAuthModal('login'));
             closeModalButton.addEventListener('click', closeAuthModal);
             document.getElementById('toggle-auth-mode').addEventListener('click', toggleAuthMode);
             authForm.addEventListener('submit', handleAuthSubmit);

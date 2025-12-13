@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>หน้าชำระเงิน (Payment Checkout)</title>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Use Inter font (default choice for modern UIs) -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Noto+Sans+Thai:wght@100..900&display=swap');
+        body {
+            font-family: 'Noto Sans Thai', 'Inter', sans-serif;
+            background-color: #f7f9fb;
+        }
+        /* Custom class for active tab */
+        .tab-active {
+            border-bottom: 3px solid #10b981; /* Emerald 500 */
+            color: #10b981;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-4">
+
+    <!-- Payment Container Card -->
+    <div id="payment-container" class="w-full max-w-4xl bg-white shadow-2xl rounded-xl overflow-hidden flex flex-col md:flex-row transform transition duration-500 ease-in-out">
+        
+        <!-- Main Payment Form (Left/Top) -->
+        <div class="md:w-3/5 p-6 sm:p-8 lg:p-10">
+            <h1 class="text-3xl font-extrabold text-gray-900 mb-6 border-b pb-4">
+                <span class="text-emerald-500">|</span> การชำระเงิน
+            </h1>
+
+            <!-- Payment Method Tabs -->
+            <div class="flex border-b border-gray-200 mb-6">
+                <button 
+                    id="tab-card" 
+                    onclick="selectMethod('card')" 
+                    class="py-3 px-4 text-sm sm:text-base text-gray-700 hover:text-emerald-600 transition duration-150 rounded-t-lg tab-active"
+                >
+                    บัตรเครดิต/เดบิต
+                </button>
+                <button 
+                    id="tab-promptpay" 
+                    onclick="selectMethod('promptpay')" 
+                    class="py-3 px-4 text-sm sm:text-base text-gray-700 hover:text-emerald-600 transition duration-150 rounded-t-lg"
+                >
+                    พร้อมเพย์ / QR
+                </button>
+            </div>
+
+            <!-- CARD PAYMENT FORM -->
+            <div id="method-card" class="payment-method-content">
+                <form onsubmit="handlePayment(event, 'บัตรเครดิต')" class="space-y-4">
+                    <!-- Card Number -->
+                    <div>
+                        <label for="card-number" class="block text-sm font-medium text-gray-700 mb-1">หมายเลขบัตร</label>
+                        <input type="text" id="card-number" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-emerald-500 focus:border-emerald-500 transition duration-150" placeholder="XXXX XXXX XXXX XXXX" maxlength="19" required>
+                    </div>
+
+                    <!-- Name on Card -->
+                    <div>
+                        <label for="card-name" class="block text-sm font-medium text-gray-700 mb-1">ชื่อบนบัตร (ภาษาอังกฤษ)</label>
+                        <input type="text" id="card-name" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-emerald-500 focus:border-emerald-500 transition duration-150" placeholder="JANE DOE" required>
+                    </div>
+
+                    <!-- Expiry Date and CVV -->
+                    <div class="flex space-x-4">
+                        <div class="w-1/2">
+                            <label for="card-expiry" class="block text-sm font-medium text-gray-700 mb-1">วันหมดอายุ (ด/ป)</label>
+                            <input type="text" id="card-expiry" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-emerald-500 focus:border-emerald-500 transition duration-150" placeholder="MM/YY" maxlength="5" required>
+                        </div>
+                        <div class="w-1/2">
+                            <label for="card-cvv" class="block text-sm font-medium text-gray-700 mb-1">รหัส CVV</label>
+                            <input type="password" id="card-cvv" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-emerald-500 focus:border-emerald-500 transition duration-150" placeholder="XXX" maxlength="4" required>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="w-full mt-6 bg-emerald-500 text-white font-semibold py-3 rounded-xl hover:bg-emerald-600 transition duration-200 shadow-md hover:shadow-lg focus:outline-none focus:ring-4 focus:ring-emerald-500 focus:ring-opacity-50">
+                        ยืนยันการชำระเงิน 1,299.00 ฿
+                    </button>
+                </form>
+            </div>
+
+            <!-- PROMPTPAY/QR CONTENT (Hidden by default) -->
+            <div id="method-promptpay" class="payment-method-content hidden text-center p-6">
+                <div class="bg-emerald-50 border-l-4 border-emerald-400 p-4 mb-6 rounded-lg text-emerald-800">
+                    <p class="font-semibold">สแกนเพื่อชำระเงิน</p>
+                    <p class="text-sm">ใช้แอปพลิเคชันธนาคารของคุณสแกน QR Code ด้านล่างเพื่อชำระเงิน 1,299.00 ฿</p>
+                </div>
+                
+                <!-- Placeholder QR Code -->
+                <div class="flex justify-center mb-6">
+                    <img 
+                        src="https://qrcode.in.th/wp-content/themes/QR-THEME/page-templates/assets/img/qr-code.svg" 
+                        alt="QR Code สำหรับ PromptPay" 
+                        class="border-4 border-gray-200 rounded-lg shadow-xl"
+                    />
+                </div>
+                
+                <p class="text-gray-500 text-sm mb-4">QR Code นี้จะหมดอายุใน 5 นาที</p>
+
+                <button onclick="handlePayment(event, 'พร้อมเพย์')" class="w-full max-w-xs bg-emerald-500 text-white font-semibold py-3 rounded-xl hover:bg-emerald-600 transition duration-200 shadow-md hover:shadow-lg focus:outline-none focus:ring-4 focus:ring-emerald-500 focus:ring-opacity-50">
+                    แจ้งชำระเงินสำเร็จ
+                </button>
+            </div>
+        </div>
+        
+        <!-- Order Summary (Right/Bottom) -->
+        <div class="md:w-2/5 bg-gray-50 p-6 sm:p-8 lg:p-10 border-t md:border-t-0 md:border-l border-gray-100 flex flex-col justify-between">
+            <div>
+                <h2 class="text-xl font-bold text-gray-800 mb-6">สรุปรายการสั่งซื้อ</h2>
+                
+                <div class="space-y-4 text-gray-600">
+                    <!-- Item List -->
+                    <div class="flex justify-between items-center text-sm">
+                        <span>สินค้า (2 ชิ้น)</span>
+                        <span>1,200.00 ฿</span>
+                    </div>
+                    <div class="flex justify-between items-center text-sm">
+                        <span>ค่าจัดส่ง</span>
+                        <span>49.00 ฿</span>
+                    </div>
+                    <div class="flex justify-between items-center text-sm">
+                        <span>ส่วนลด</span>
+                        <span class="text-red-500">- 50.00 ฿</span>
+                    </div>
+                </div>
+
+                <!-- Divider -->
+                <div class="my-6 border-t border-gray-200"></div>
+
+                <!-- Total -->
+                <div class="flex justify-between items-center text-xl font-bold text-gray-900">
+                    <span>ยอดรวมสุทธิ</span>
+                    <span class="text-emerald-600">1,299.00 ฿</span>
+                </div>
+            </div>
+            
+            <div class="mt-8 pt-4 border-t border-gray-200 text-sm text-gray-500">
+                <p>การชำระเงินของคุณปลอดภัยและถูกเข้ารหัสด้วยเทคโนโลยี SSL</p>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Confirmation/Error Modal -->
+    <div id="modal" class="fixed inset-0 bg-gray-900 bg-opacity-50 hidden items-center justify-center p-4 z-50">
+        <div class="bg-white rounded-xl shadow-2xl p-6 sm:p-8 w-full max-w-sm text-center transform transition-all duration-300 scale-95 opacity-0">
+            <div id="modal-icon" class="text-5xl mb-4"></div>
+            <h3 id="modal-title" class="text-xl font-bold mb-2 text-gray-900"></h3>
+            <p id="modal-message" class="text-gray-600 mb-6"></p>
+            <button onclick="closeModal()" class="w-full bg-emerald-500 text-white font-semibold py-2 rounded-lg hover:bg-emerald-600 transition duration-150">
+                ตกลง
+            </button>
+        </div>
+    </div>
+
+    <script>
+        const paymentContainer = document.getElementById('payment-container');
+        const modal = document.getElementById('modal');
+        const modalContent = modal.querySelector('.scale-95');
+        const modalIcon = document.getElementById('modal-icon');
+        const modalTitle = document.getElementById('modal-title');
+        const modalMessage = document.getElementById('modal-message');
+
+        // Function to handle tab selection
+        function selectMethod(method) {
+            const tabs = {
+                card: document.getElementById('tab-card'),
+                promptpay: document.getElementById('tab-promptpay')
+            };
+            const contents = {
+                card: document.getElementById('method-card'),
+                promptpay: document.getElementById('method-promptpay')
+            };
+
+            // Reset all
+            Object.values(tabs).forEach(tab => tab.classList.remove('tab-active'));
+            Object.values(contents).forEach(content => content.classList.add('hidden'));
+
+            // Set active
+            tabs[method].classList.add('tab-active');
+            contents[method].classList.remove('hidden');
+        }
+
+        // --- Utility Functions for Modal (No alert/confirm) ---
+
+        function showModal(title, message, type) {
+            modalTitle.textContent = title;
+            modalMessage.textContent = message;
+            
+            // Set icon and color based on type
+            if (type === 'success') {
+                modalIcon.innerHTML = '&#9989;'; // Checkmark
+                modalIcon.className = 'text-5xl mb-4 text-emerald-500';
+            } else if (type === 'error') {
+                modalIcon.innerHTML = '&#10060;'; // Cross mark
+                modalIcon.className = 'text-5xl mb-4 text-red-500';
+            } else {
+                modalIcon.innerHTML = '&#9432;'; // Info
+                modalIcon.className = 'text-5xl mb-4 text-blue-500';
+            }
+            
+            modal.classList.remove('hidden', 'opacity-0');
+            modal.classList.add('flex', 'opacity-100');
+            
+            // Animation for the inner content
+            setTimeout(() => {
+                modalContent.classList.remove('scale-95', 'opacity-0');
+                modalContent.classList.add('scale-100', 'opacity-100');
+            }, 10);
+        }
+
+        function closeModal() {
+            modalContent.classList.remove('scale-100', 'opacity-100');
+            modalContent.classList.add('scale-95', 'opacity-0');
+            
+            setTimeout(() => {
+                modal.classList.remove('flex', 'opacity-100');
+                modal.classList.add('hidden', 'opacity-0');
+            }, 300);
+        }
+
+
+        // Function to handle form submission
+        function handlePayment(event, method) {
+            event.preventDefault(); // Stop the form from submitting normally
+            
+            // Simulate a successful API call after a short delay
+            setTimeout(() => {
+                showModal(
+                    'ชำระเงินสำเร็จ!', 
+                    `ยอดเงิน 1,299.00 ฿ ถูกชำระผ่าน ${method} เรียบร้อยแล้ว ขอบคุณที่ใช้บริการค่ะ/ครับ`, 
+                    'success'
+                );
+                // In a real app, you would redirect the user or update the UI here
+            }, 1000);
+            
+            // For card method, you might want to clear sensitive fields (not implemented here for simplicity)
+        }
+
+        // Pre-fill input for demonstration (optional)
+        document.addEventListener('DOMContentLoaded', () => {
+            const cardNumberInput = document.getElementById('card-number');
+            const cardExpiryInput = document.getElementById('card-expiry');
+
+            // Format card number input
+            cardNumberInput.addEventListener('input', (e) => {
+                let value = e.target.value.replace(/\D/g, ''); // Remove non-digits
+                value = value.substring(0, 16); // Limit to 16 digits
+                
+                // Add spaces every 4 digits
+                let formattedValue = value.match(/.{1,4}/g)?.join(' ') || '';
+                e.target.value = formattedValue;
+            });
+
+            // Format expiry date input
+            cardExpiryInput.addEventListener('input', (e) => {
+                let value = e.target.value.replace(/\D/g, ''); // Remove non-digits
+                value = value.substring(0, 4); // MMYY
+                
+                // Add '/' after MM
+                let formattedValue = '';
+                if (value.length > 2) {
+                    formattedValue = value.substring(0, 2) + '/' + value.substring(2);
+                } else {
+                    formattedValue = value;
+                }
+                e.target.value = formattedValue;
+            });
+
+        });
+
+    </script>
+
+</body>
+</html>
